@@ -19,11 +19,17 @@ class Solution(object):
         # 如果该节点存在子节点，sum-=root，分两路循环
         if root is None:
             return False
-        if root.left is None and root.right is None:
-            if root == sum:
-                return True
-            else:
-                return False
+        # if root.left is None and root.right is None:
+        #     if root == sum:
+        #         return True
+        #     else:
+        #         return False
+        # else:
+        #     sum -= root
+        #     return self.hasPathSum(root.left, sum) or self.hasPathSum(root.right, sum)
+
+        sum -= root.val
+        if not root.left and not root.right:
+            return sum == 0
         else:
-            sum -= root
             return self.hasPathSum(root.left, sum) or self.hasPathSum(root.right, sum)
