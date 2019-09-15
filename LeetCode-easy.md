@@ -1614,3 +1614,67 @@ class Solution(object):
             return self.hasPathSum(root.left, sum) or self.hasPathSum(root.right, sum)
 
 ```
+
+# 33、求众数
+给定一个大小为 n 的数组，找到其中的众数。众数是指在数组中出现次数大于 ⌊ n/2 ⌋ 的元素。
+
+你可以假设数组是非空的，并且给定的数组总是存在众数。
+
+## 思路一：暴力循环
+
+暴力算法遍历整个数组，统计每个数字出现的次数。将出现次数大于n/2的元素返回
+
+```python
+class Solution(object):
+    def majorityElement(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        l = len(nums)/2
+        for n in nums:
+            if nums.count(n) > l:
+                return n
+```
+
+## 思路二：哈希表
+
+用哈希表来快速统计每个元素出现的次数，返回有最大值的键
+
+```python
+class Solution:
+    def majorityElement(self, nums):
+        counts = collections.Counter(nums)
+        return max(counts.keys(), key=counts.get)
+```
+
+## 思路三：排序
+
+出现次数大于n/2的元素，在列表排序过后，必定会出现在下标为n//2的位置上
+
+```python
+class Solution:
+    def majorityElement(self, nums):
+        nums.sort()
+        return nums[len(nums)//2]
+```
+
+## 思路四：Boyer-Moore 投票算法
+
+如果我们把众数记为 +1+1 ，把其他数记为 -1−1 ，将它们全部加起来，显然和大于 0 ，从结果本身我们可以看出众数比其他数多。
+
+本质上， Boyer-Moore 算法就是找 nums 的一个后缀 suf ，其中 suf[0] 就是后缀中的众数。我们维护一个计数器，如果遇到一个我们目前的候选众数，就将计数器加一，否则减一。只要计数器等于 0 ，我们就将 nums 中之前访问的数字全部 忘记 ，并把下一个数字当做候选的众数。
+
+```python
+class Solution:
+    def majorityElement(self, nums):
+        count = 0
+        candidate = None
+
+        for num in nums:
+            if count == 0:
+                candidate = num
+            count += (1 if num == candidate else -1)
+
+        return candidate
+```
