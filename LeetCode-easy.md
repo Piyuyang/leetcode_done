@@ -1724,6 +1724,7 @@ class Solution(object):
 > 向右旋转 3 步: [5,6,7,1,2,3,4]
 
 ## 思路一：pop末尾元素，向首位insert
+
 ```python
 class Solution(object):
     def rotate(self, nums, k):
@@ -1732,7 +1733,31 @@ class Solution(object):
         :type k: int
         :rtype: None Do not return anything, modify nums in-place instead.
         """
+        # 若k大于n，取余数，节约步数
+        k %= len(nums)
         for i in range(k):
             tmp = nums.pop()
             nums.insert(0,tmp)
 ```
+
+## 思路二：拼接
+
+```python
+class Solution:
+    def rotate(self, nums: List[int], k: int) -> None:
+        # 若k大于n，取余数，节约步数
+        k %= len(nums)
+        nums[:] = nums[-k:] + nums[:-k]
+```
+
+## 思路三：三次翻转（整体翻转、前部分翻转、后部分翻转）
+
+```python
+class Solution:
+    def rotate(self, nums: List[int], k: int) -> None:
+        k %= len(nums)
+        nums[:] = nums[::-1]
+        nums[:k] = nums[:k][::-1]
+        nums[k:] = nums[k:][::-1]
+```
+

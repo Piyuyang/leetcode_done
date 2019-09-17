@@ -19,9 +19,18 @@ class Solution(object):
         """
         # 若k大于n，取余数，节约步数
         k %= len(nums)
-        for i in range(k):
-            tmp = nums.pop()
-            nums.insert(0, tmp)
+
+        # for i in range(k):
+        #     tmp = nums.pop()
+        #     nums.insert(0, tmp)
+
+        # 思路二：拼接
+        # nums[:] = nums[-k:] + nums[:-k]
+
+        # 思路三
+        nums[:] = nums[::-1]
+        nums[:k] = nums[:k][::-1]
+        nums[k:] = nums[k:][::-1]
 
 
 if __name__ == '__main__':
