@@ -17,6 +17,8 @@ class Solution(object):
         :type k: int
         :rtype: None Do not return anything, modify nums in-place instead.
         """
+        # 若k大于n，取余数，节约步数
+        k %= len(nums)
         for i in range(k):
             tmp = nums.pop()
             nums.insert(0, tmp)
