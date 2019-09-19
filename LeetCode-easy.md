@@ -1761,3 +1761,47 @@ class Solution:
         nums[k:] = nums[k:][::-1]
 ```
 
+
+
+# 36、位1的个数
+
+编写一个函数，输入是一个无符号整数，返回其二进制表达式中数字位数为 ‘1’ 的个数（也被称为[汉明重量](https://baike.baidu.com/item/汉明重量)）。
+
+> 输入：00000000000000000000000000001011
+> 输出：3
+> 解释：输入的二进制串 00000000000000000000000000001011 中，共有三位为 '1'。
+
+## 思路一：内置函数调用
+
+```python
+class Solution(object):
+    def hammingWeight(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        return bin(n).count('1')
+```
+
+## 思路二：位运算
+
+每次 n&(n-1)都能将n中为1的最低位变为0
+
+n:			00000000000000000000000000001011
+
+n-1: 		00000000000000000000000000001010
+
+n&(n-1):  00000000000000000000000000001010
+
+当n为0时，结束循环	
+
+```python
+class Solution(object):
+    def hammingWeight(self, n):
+        res = 0
+        while n:
+            n &= (n-1)
+            res += 1
+        return res
+```
+
